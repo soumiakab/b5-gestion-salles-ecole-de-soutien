@@ -1,8 +1,7 @@
 <?php
 require 'autoload.php';
+if(isset($_GET['page']))
 $parametrs=explode('/',$_GET['page']);
-// $parametrs[0]='controllers'
-// $parametrs[1]='action'
 if(isset($parametrs[0]) & !empty($parametrs[0]) )
 {
     $controller=ucfirst($parametrs[0]);
@@ -11,7 +10,29 @@ if(isset($parametrs[0]) & !empty($parametrs[0]) )
         $pages=['Salle','Groupe','Matiere'];
         if(in_array($controller,$pages))
         {
-            if(!isset($_SESSION['user_name']) || empty($_SESSION['user_name'])){
+            if((!isset($_SESSION['admin']) || empty($_SESSION['admin'])) && isset($_SESSION['id_ens'])){
+                header("location:http://localhost/brief5-exel-gestion-salles/user/droit");
+                return 0;
+
+            }
+            if(!isset($_SESSION['admin']) || empty($_SESSION['admin'])){
+                header("location:http://localhost/brief5-exel-gestion-salles/user/login");
+                return 0;
+
+            }
+
+        }
+
+        $pages2=['Enseignant'];
+        if(in_array($controller,$pages2))
+        {
+            if((!isset($_SESSION['id_ens']) || empty($_SESSION['id_ens'])) && isset($_SESSION['admin'])){
+                header("location:http://localhost/brief5-exel-gestion-salles/user/droit");
+                return 0;
+
+            }
+
+            if(!isset($_SESSION['id_ens']) || empty($_SESSION['id_ens'])){
                 header("location:http://localhost/brief5-exel-gestion-salles/user/login");
                 return 0;
 
@@ -30,13 +51,13 @@ if(isset($parametrs[0]) & !empty($parametrs[0]) )
             { 
                 $action=$parametrs[1]; 
                 if(method_exists($obj,$action))
-                { 
-                    if (isset($params[2]) & !empty($params[2])) 
+                {
+                    if (isset($parametrs[2]) && !empty($parametrs[2])) 
                     {
-                        $obj->$action($params[2]);
+                        $obj->$action($parametrs[2]);
                     }else
                     {
-                        
+
                         $obj->$action();
                     }
                 }else
@@ -64,8 +85,8 @@ if(isset($parametrs[0]) & !empty($parametrs[0]) )
     }
 }else
 {
-    require_once "controller/HomeController.php";
+    require_once "controllers/HomeController.php";
 	$obj=new HomeController();
-	$obj->index();
+	$obj->index('home');
 }
 ?>

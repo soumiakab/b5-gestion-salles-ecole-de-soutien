@@ -9,20 +9,15 @@ class GroupeController{
 
     public function ajouterGrp()
     {
-       if(isset($_POST['libelleg'])){
+        $i=0;
+        while(isset($_POST['libelleg'.$i])){
         $grp=new Groupe();
-           $grp->ajouterG($_POST['libelleg'],$_POST['effectifg']);
+           $grp->ajouterG($_POST['libelleg'.$i],$_POST['effectifg'.$i]);
         //    $this->afficherGrp();
-            header("location:afficherGrp");
-           if($grp=='ok'){
-                echo "<script>alert('ajouter');</script>";
+        $i++;
+        }
+        header("location:afficherGrp");
 
-           }
-           else{
-               echo "<script>alert('".$grp."');</script>";
-           }
-
-       }
     }
 
     public function afficherGrp()

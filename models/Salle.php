@@ -27,6 +27,22 @@ class Salle{
             return 'no';
         // }
     }
+    public function afficherSome($data)
+    {
+        if(empty($data)){
+            $data[0]=0;
+        }
+        $qr="select * from salle where id in (".implode(',',$data).")";
+        $res=DB::connect()->query($qr);
+        if($row=$res->fetchAll(PDO::FETCH_ASSOC)){
+            return $row;
+        }
+        else{
+            return $row=[];
+        }
+        $res=null;
+
+    }
 
      public function modifierS($id,$libelle,$capacite)
     {

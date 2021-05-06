@@ -12,7 +12,12 @@
             require_once __DIR__.'/../view/login.php';
         }
 
-
+        public function inscription()
+        {
+            $matiere=new Matiere();
+            $mat=$matiere->afficherM();
+            require_once __DIR__.'/../view/inscription.php';
+        }
 
 
 
@@ -24,9 +29,9 @@
         }
 
 
-        public function inscription()
+        public function inscriptionConf()
         {
-
+            $mat=$_POST['matiere'];
             if(isset($_POST['sub'])){
                 $data=array(
                     'nom'=>$_POST['nom'],
@@ -39,10 +44,13 @@
                 $res=User::ajouterU($data);
                 if($res== 'ok'){
                
-                    echo $res;
+                   $iduser=User::lastOne();
+                   $ens=User::isertEns($iduser['id'],$mat);
+                   require_once __DIR__.'/../view/login.php';
+
                 }
                 else{
-                    echo $res;
+                    require_once __DIR__.'/../view/inscription.php';
                 }
 
 
@@ -61,13 +69,17 @@
             $res=User::connectionU($data);
             
             if($res== 'ok'){
+                if(isset($_SESSION['admin']) && !empty($_SESSION['admin'])){
                 header("location:http://localhost/brief5-exel-gestion-salles/salle/afficherS");
+                }
+                else{
+                    header("location:http://localhost/brief5-exel-gestion-salles/enseignant");
+
+                }
             }
             else{
                 header("location:login");
             }
-
-
         }
        }
        public function deconnecter()
@@ -76,10 +88,13 @@
            session_unset();
            session_destroy();
            header("location:http://localhost/brief5-exel-gestion-salles/user/login");
-
        }
 
+       public function droit()
+       {
+        require_once __DIR__.'/../view/includes/404.php';
 
+       }
 
 
     }

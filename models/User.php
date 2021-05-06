@@ -5,27 +5,33 @@ class User{
      static public function connectionU($data)
      {
 		$qr="SELECT * FROM user WHERE email LIKE '".$data['email']."'";
-
 		$res=DB::connect()->query($qr);
-		session_start();
 		if($row=$res->fetch(PDO::FETCH_ASSOC)){
 			
 			if($row['motpass']==$data['motpass']){
 				
-				
 				$_SESSION['user_name']=$row['nom'];
-				session_unset($_SESSION['login_erreur']);
-				session_destroy($_SESSION['login_erreur']);
+				if($row['type']=="admin")
+				{
+					$_SESSION['admin']=true;
+
+				}
+				else{
+
+					$qr="SELECT * FROM enseignant WHERE iduser=".$row['id'];
+      				$rs=DB::connect()->query($qr);
+					$rw=$rs->fetch(PDO::FETCH_ASSOC);
+					$_SESSION['id_ens']=$rw['id_ens'];
+				}
 				return 'ok';
 			}
 			else{
 				
 				$_SESSION['login_erreur']="Password is not valid!";
-				
+				return "erreur";
 			}
 		 }
 		 else{
-			return "erreur";
 			$_SESSION['login_erreur']="no account with this email";
 			return "erreur";
 		 }
@@ -68,7 +74,25 @@ class User{
      }
 
 
+public function lastOne()
+{
+	$qr="SELECT id FROM user ORDER BY id DESC LIMIT 1";
+	$res=DB::connect()->query($qr);
+	$row=$res->fetch(PDO::FETCH_ASSOC);
+	return $row;		
+}
 
+function isertEns($user,$mat)
+{
+	$qr='insert into enseignant (idmat,iduser) values('.$mat.','.$user.')';
+	$res=DB::connect()->prepare($qr);
+	if($res->execute()){
+		return 'ok';
+	}
+	else{
+		return 'no';
+	}
+}
 
 
 

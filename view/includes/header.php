@@ -32,7 +32,6 @@
 					<li class="nav-item"><a class="nav-link" href="#"><em class="fa fa-pencil-square-o"></em> Enseignants</a></li>
 					<li class="nav-item"><a class="nav-link" href="#"><em class="fa fa-clone"></em> Demmande d ajout </a></li>
 				</ul>
-				<!-- <a href="#" class="logout-button"><em class="fa fa-power-off"></em> deconnexion</a> -->
 			</nav>
 			<main class="col-xs-12 col-sm-8 col-lg-9 col-xl-10 pt-3 pl-4 ml-auto">
 				<header class="page-header row justify-center">
