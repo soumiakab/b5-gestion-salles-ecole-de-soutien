@@ -2,15 +2,39 @@
 
 class User{
 
-     static public function connectionU($data)
+	private  $id;
+    private  $email;
+    private  $userName;
+    private  $passWord;
+    private  $type;
+
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+     }
+
+     public function setUserName($userName){
+        $this->userName = $userName;
+     }
+
+	 public function setPassWord($passWord){
+        $this->passWord = $passWord;
+     }
+	 public function setType($type){
+        $this->type = $type;
+     }
+      public function connectionU()
      {
-		$qr="SELECT * FROM user WHERE email LIKE '".$data['email']."'";
+		$qr="SELECT * FROM user WHERE email LIKE '".$this->email."'";
 		$res=DB::connect()->query($qr);
 		if($row=$res->fetch(PDO::FETCH_ASSOC)){
 			
-			if($row['motpass']==$data['motpass']){
+			if($row['motpass']==$this->passWord){
 				
-				$_SESSION['user_name']=$row['nom'];
+				$_SESSION['user_name']=$row['nom_util'];
 				if($row['type']=="admin")
 				{
 					$_SESSION['admin']=true;
@@ -40,15 +64,14 @@ class User{
 
 
      
-	static public function ajouterU($data)
+	 public function ajouterU()
 
-	{	
-		$stmt=DB::connect()->prepare('insert into user(nom,prenom,email,motpass,type) values (:nom,:prenom,:email,:motpass,:type)');
-		$stmt->bindParam(':nom',$data['nom']);
-		$stmt->bindParam(':prenom',$data['prenom']);
-		$stmt->bindParam(':email',$data['email']);
-		$stmt->bindParam(':motpass',$data['motpass']);
-		$stmt->bindParam(':type',$data['type']);
+	{
+		$stmt=DB::connect()->prepare('insert into user(email,nom_util,motpass,type) values (:email,:nom_util,:motpass,:type)');
+		$stmt->bindParam(':email',$this->email);
+		$stmt->bindParam(':nom_util',$this->userName);
+		$stmt->bindParam(':motpass',$this->passWord);
+		$stmt->bindParam(':type',$this->type);
 
 		if($stmt->execute()){
 			return 'ok';
@@ -84,7 +107,7 @@ public function lastOne()
 
 function isertEns($user,$mat)
 {
-	$qr='insert into enseignant (idmat,iduser) values('.$mat.','.$user.')';
+	$qr='insert into enseignant (nom,prenom,idmat,iduser) values('.$mat.','.$user.')';
 	$res=DB::connect()->prepare($qr);
 	if($res->execute()){
 		return 'ok';

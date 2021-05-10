@@ -31,36 +31,46 @@
 			</div>
 		</div><br><br>
 		<div class="jumbotron">
-			<form action="http://localhost/brief5-exel-gestion-salles/enseignant/filterSalle" name="form" onsubmit="f()" method="post" >
+			<form action="ajouterResrv" name="form" onsubmit="f()" method="post" >
             <div>
+            <input type="text" name="date" value="<?php echo $date; ?>" hidden>
             <input type="text" name="groupe" value="<?php echo $groupe; ?>" hidden>
-            <input type="text" name="date" value="<?php echo $date; ?>" hidden></div>
+            <input type="text" name="dure" value="<?php echo $dure; ?>" hidden>
+            </div>
 			<div class="form-group">
-          			<label>Dure:</label>
-        			<select class="form-control" name="dure" >
-					  <option value="0" selected>Selectionner la dure du seance:</option>
-					  <option value="08:00-10:00" <?php if(in_array("08:00-10:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="08:00-10:00"){echo "selected"; } else{ echo "disabled";}}else{   echo "disabled";}} ?>>08:00-10:00</option>
-					  <option value="10:00-12:00" <?php if(in_array("10:00-12:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="10:00-12:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>10:00-12:00</option>
-					  <option value="12:00-14:00" <?php if(in_array("12:00-14:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="12:00-14:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>12:00-14:00</option>
-					  <option value="14:00-16:00" <?php if(in_array("14:00-16:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="14:00-16:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>14:00-16:00</option>
-					  <option value="16:00-18:00" <?php if(in_array("16:00-18:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="16:00-18:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>16:00-18:00</option>
+          			<label>Salle:</label>
+        			<select class="form-control" name="salle" require>
+					  <option value="0" selected>Selectionner une salle:</option>
+                      <?php foreach($tab as $row){?>
+					  <option value="<?php echo $row['id']?>"><?php echo $row['libelle']?></option>
+					     <?php } ?>
 					</select>
       			</div>
-                <button name="submitD">ok</button>
+				  <div class="row">
+      				 <div class="col align-self-end">
+      					<button class="btn btn-primary" name="reserver">Reserver</button>
+      					
+      				 </div>
+      			</div>
 			</form>
 		</div>
     </div>
     </div>
 	</div>
-    <script>
-        function f(){
-            var dure = document.form.dure.value;
-            if(dure == "0"){
-                event.preventDefault();
-                alert("veuillez choisir");
+<script>
+function f(){
+    var salle = document.form.salle.value;
+    var sl = document.form.salle.length;
+    if(salle=="0" && sl>1){
+        event.preventDefault();
+        alert("veuillez choisir");
 
-            }
-        }
+    }
+    if(sl==1){
+        event.preventDefault();
+        alert("aucune salle n est disponible veuillez changer la date ou la dure de la seance");
+    }
+}
 </script>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

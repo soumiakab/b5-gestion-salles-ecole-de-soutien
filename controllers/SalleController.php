@@ -8,19 +8,17 @@ class SalleController{
 
     public function ajouterS()
     {
-       if(isset($_POST['libelle'])){
-        $salle=new Salle();
-           $s=$salle->ajouterS($_POST['libelle'],$_POST['capacite']);
-            header("location:afficherS");
-           if($s=='ok'){
-                echo "<script>alert('ajouter');</script>";
-
-           }
-           else{
-               echo "<script>alert('".$s."');</script>";
-           }
-
-       }
+        if(isset($_POST['cmp'])){
+            $i=(int)$_POST['cmp'];
+                while(isset($_POST['libelle'.$i]) && !empty($_POST['libelle'.$i])){
+                        $salle=new Salle();
+                        $salle->setLibelle($_POST['libelle'.$i]);
+                        $salle->setCapacite($_POST['capacite'.$i]);
+                        $s=$salle->ajouterS();
+                        $i--;
+                }
+            }
+        header("location:afficherS");
     }
 
     public function afficherS()
@@ -32,9 +30,13 @@ class SalleController{
     }
     public function modifierS()
     {
-        if(isset($_POST['id'])){
+        if(isset($_POST['save'])){
+            $i=$_POST['num'];
             $salle=new Salle();
-            $msalle=$salle->modifierS($_POST['id'],$_POST['libelle'],$_POST['capacite']);
+            $salle->setId($_POST['id'.$i]);
+            $salle->setLibelle($_POST['libelle'.$i]);
+            $salle->setCapacite($_POST['capacite'.$i]);
+            $msalle=$salle->modifierS();
             header("location:afficherS");
             if($msalle=='ok'){
                  echo $msalle;
@@ -48,8 +50,10 @@ class SalleController{
     public function supprimer()
     {
         if(isset($_POST['delete'])){
+            $i=$_POST['num'];
             $salle=new Salle();
-            $salle->supprimer($_POST['id']);
+            $salle->setId($_POST['id'.$i]);
+            $salle->supprimer();
             header("location:afficherS");
         }
        
@@ -59,7 +63,8 @@ class SalleController{
     {
         if(isset($_POST['edit'])){    
             $salle=new Salle();
-            $sal=$salle->edit($_POST['id']);
+            $salle->setId($_POST['id']);
+            $sal=$salle->edit();
             require __DIR__.'/../view/salle/modifier.php';
         }
     }

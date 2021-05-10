@@ -40,10 +40,11 @@
 			<div class="form-group">
           			<label>Salle:</label>
         			<select class="form-control" name="salle" require>
-					  <option value="0" selected>Selectionner une salle:</option>
+					  <option value="0" selected disabled>Selectionner une salle:</option>
                       <?php foreach($tab as $row){?>
 					  <option value="<?php echo $row['id']?>"><?php echo $row['libelle']?></option>
 					     <?php } ?>
+                         <option value="<?php if(isset($_SESSION['id_sl_resr']) && !empty($_SESSION['id_sl_resr'])){ echo $_SESSION['id_sl_resr'] ;} ?>" <?php if(isset($_SESSION['id_sl_resr']) && !empty($_SESSION['id_sl_resr'])){ echo "selected";}else{echo "disabled='true'";} ?>><?php if(isset($_SESSION['id_sl_resr'])){ echo  $_SESSION['libelle_sl_resr'];}?></option>
 					</select>
       			</div>
 				  <div class="row">

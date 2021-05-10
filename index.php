@@ -4,6 +4,9 @@ if(isset($_GET['page']))
 $parametrs=explode('/',$_GET['page']);
 if(isset($parametrs[0]) & !empty($parametrs[0]) )
 {
+    // if (basename($_SERVER['PHP_SELF'])) {
+    //     session_destroy();
+    // }
     $controller=ucfirst($parametrs[0]);
     $file='controllers/'.$controller.'controller'.'.php';
     if(file_exists($file)){
@@ -85,8 +88,8 @@ if(isset($parametrs[0]) & !empty($parametrs[0]) )
     }
 }else
 {
-    require_once "controllers/HomeController.php";
-	$obj=new HomeController();
-	$obj->index('home');
+    require_once "controllers/UserController.php";
+	$obj=new UserController();
+	$obj->index();
 }
 ?>

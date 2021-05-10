@@ -31,20 +31,20 @@
 			</div>
 		</div><br><br>
 		<div class="jumbotron">
-			<form action="filterDure" name="form" onsubmit="f()" method="post" >
+			<form action="http://localhost/brief5-exel-gestion-salles/enseignant/filterDure" name="form" onsubmit="f()" method="post" >
 				<div class="form-group">
           			<label>Groupe:</label>
         			<select class="form-control" name="groupe">
                     <option value="0" selected>Selectionner un groupe:</option>
 
                     <?php foreach($tabg as $row){?>
-					  <option value="<?php echo $row['id']?>"><?php echo $row['libelle']?></option>
+					  <option value="<?php echo $row['id']?>"  <?php if(isset($r[0]['id_grp'])) { if($r[0]['id_grp']==$row['id']){echo "selected";}} ?>  ><?php echo $row['libelle']?></option>
                       <?php }?>
 					</select>
       			</div>
 				<div class="form-group">
           			<label>Date:</label>
-        			 <input type="date" class="form-control" name="date">
+        			 <input type="date" class="form-control" value="<?php if(isset($r[0]['date'])) {echo $r[0]['date'];}?>" name="date">
       			</div>
                   <button name="submitDate">ok</button>
 

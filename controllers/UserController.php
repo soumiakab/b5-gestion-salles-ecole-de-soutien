@@ -4,11 +4,21 @@
 
         public function index()
         {
-            require_once __DIR__.'/../view/home.php';
+            if(isset($_SESSION['admin']) && !empty($_SESSION['admin'])){
+        
+                header("location:http://localhost/brief5-exel-gestion-salles/salle/afficherS");
+            }
+            else{
+                    header("location:http://localhost/brief5-exel-gestion-salles/enseignant");
+
+            }
         }
 
         public function login()
         {
+            if(isset($_SESSION['login_erreur'])){
+            $err=$_SESSION['login_erreur'];
+            unset($_SESSION['login_erreur']);}
             require_once __DIR__.'/../view/login.php';
         }
 
@@ -33,19 +43,22 @@
         {
             $mat=$_POST['matiere'];
             if(isset($_POST['sub'])){
-                $data=array(
-                    'nom'=>$_POST['nom'],
-                    'prenom'=>$_POST['prenom'],
-                    'email'=>$_POST['email'],
-                    'motpass'=>$_POST['passw'],
-                    'type'=>$_POST['type']
-
-                );
-                $res=User::ajouterU($data);
-                if($res== 'ok'){
+                $res= new User();
+                $res->setEmail($_POST['email']);
+                $res->setUserName($_POST['username']);
+                $res->setPassWord($_POST['passw']);
+                $res->setType($_POST['type']);
+                $r=$res->ajouterU();
+                if($r== 'ok'){
                
-                   $iduser=User::lastOne();
-                   $ens=User::isertEns($iduser['id'],$mat);
+                   $user= new User();
+                   $iduser=$user->lastOne();
+                   $ens=new Enseignant();
+                   $ens->setNom($_POST['nom']);
+                   $ens->setPrenom($_POST['prenom']);
+                   $ens->setMatiere($mat);
+                   $ens->setUser($iduser['id']);
+                   $ens->isertEns();
                    require_once __DIR__.'/../view/login.php';
 
                 }
@@ -61,15 +74,14 @@
        public function connection()
        {
         if(isset($_POST['connection'])){
-            $data=array(
-                'email'=>$_POST['email'],
-                'motpass'=>$_POST['passw']
-
-            );
-            $res=User::connectionU($data);
+            $user=new User();
+            $user->setEmail($_POST['email']);
+            $user->setPassWord($_POST['passw']);
+            $res=$user->connectionU();
             
             if($res== 'ok'){
                 if(isset($_SESSION['admin']) && !empty($_SESSION['admin'])){
+        
                 header("location:http://localhost/brief5-exel-gestion-salles/salle/afficherS");
                 }
                 else{
@@ -95,8 +107,6 @@
         require_once __DIR__.'/../view/includes/404.php';
 
        }
-
-
     }
 
 

@@ -52,7 +52,7 @@
       <td><?php echo $row['id_ens']?></td>
       <td><?php echo $row['libelleG']?></td>
       <td><?php echo $row['libelleS']?></td>
-      <td><a  href="http://localhost/brief5-exel-gestion-salles/enseignant/supprimerReserv/<?php echo $row['id_cours']?>" >supprimer</a><a  href="http://localhost/brief5-exel-gestion-salles/enseignant/modifierReserv/<?php echo $row['id_cours']?>" >modifier</a></td>
+      <td><a class="btn btn-danger btn-sm rounded-0"  href="http://localhost/brief5-exel-gestion-salles/enseignant/supprimerReserv/<?php echo $row['id_cours']?>" >supprimer</a> &nbsp;<a class="btn btn-success btn-sm rounded-0" href="http://localhost/brief5-exel-gestion-salles/enseignant/modifierReserv/<?php echo $row['id_cours']?>" >modifier</a></td>
     </tr>
    <?php } ?>
   </tbody>

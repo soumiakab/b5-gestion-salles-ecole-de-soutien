@@ -1,10 +1,24 @@
 <?php
 
 class Groupe{
+    private  $id;
+    private  $libelle;
+    private  $effectif;
 
-     public function ajouterG($liblle,$effictif)
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function setLibelle($lbl){
+        $this->libelle = $lbl;
+     }
+
+     public function setEffectif($effectif){
+        $this->effectif = $effectif;
+     }
+    public function ajouterG()
     {
-        $qr='insert into groupe (libelle,effectif) values("'.$liblle.'",'.$effictif.')';
+        $qr='insert into groupe (libelle,effectif) values("'.$this->libelle.'",'.$this->effectif.')';
         $res=DB::connect()->prepare($qr);
         if($res->execute()){
             return 'ok';
@@ -28,11 +42,9 @@ class Groupe{
         // }
     }
 
-     public function modifierG($id,$libelle,$effectif)
+     public function modifierG()
     {
-        // die($id.$libelle.$effectif);
-     
-        $qr="UPDATE groupe SET libelle='$libelle',effectif=".(int)$effectif." WHERE id=".(int)$id;
+        $qr="UPDATE groupe SET libelle='$this->libelle',effectif=".(int)$this->effectif." WHERE id=".(int)$this->id;
 
         $res=DB::connect()->prepare($qr);
         if($res->execute()){
@@ -43,9 +55,9 @@ class Groupe{
         }
     }
 
-     public function edit($id)
+     public function edit()
     {
-        $qr='Select * from groupe where id='.(int)$id;
+        $qr='Select * from groupe where id='.(int)$this->id;
         $res=DB::connect()->query($qr);
         
        if( $row=$res->fetch(PDO::FETCH_ASSOC)){
@@ -62,9 +74,9 @@ class Groupe{
     }
 
 
-     public function supprimer($id)
+     public function supprimer()
     {
-            $qr="delete from groupe where id=".(int)$id;
+            $qr="delete from groupe where id=".(int)$this->id;
             $res=DB::connect()->query($qr);
     }
 

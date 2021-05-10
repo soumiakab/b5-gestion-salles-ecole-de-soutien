@@ -4,7 +4,7 @@
         
         public function index($page)
         {
-             include('view/'.$page.'.php');
+             include($page.'.php');
         }
     }
 

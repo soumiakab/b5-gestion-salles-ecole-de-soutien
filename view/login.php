@@ -35,7 +35,7 @@
           </div>
           </div>
           <div class="row">
-                                <label><?php if( isset( $_SESSION["login_erreur"])) { echo $_SESSION["login_erreur"];}?> </label><br>
+                                <label><?php if(isset( $err)) { echo $err;}?> </label><br>
 
           </div>
           <div class="form-group">

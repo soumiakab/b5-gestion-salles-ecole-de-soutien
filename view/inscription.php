@@ -34,6 +34,12 @@
             <input type="text"  name="prenom" class="form-control" required>
             </div>
           </div>
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon">nom utilisateur:</div>
+            <input type="text"  name="username" class="form-control" required>
+            </div>
+          </div>
 		  <div class="form-group">
             <div class="input-group">
               <div class="input-group-addon">email:</div>

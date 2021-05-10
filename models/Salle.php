@@ -1,10 +1,25 @@
 <?php
 
 class Salle{
+    private  $id;
+    private  $libelle;
+    private  $capacite;
 
-     public function ajouterS($liblle,$cap)
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function setLibelle($lbl){
+        $this->libelle = $lbl;
+     }
+
+     public function setCapacite($capacite){
+        $this->capacite = $capacite;
+     }
+
+     public function ajouterS()
     {
-        $qr='insert into salle (libelle,capacite) values("'.$liblle.'",'.$cap.')';
+        $qr='insert into salle (libelle,capacite) values("'.$this->libelle.'",'.$this->capacite.')';
         $res=DB::connect()->prepare($qr);
         if($res->execute()){
             return 'ok';
@@ -44,11 +59,11 @@ class Salle{
 
     }
 
-     public function modifierS($id,$libelle,$capacite)
+     public function modifierS()
     {
         // die($id.$libelle.$effectif);
      
-        $qr="UPDATE salle SET libelle='$libelle',capacite=".(int)$capacite." WHERE id=".(int)$id;
+        $qr="UPDATE salle SET libelle='$this->libelle',capacite=".(int)$this->capacite." WHERE id=".(int)$this->id;
 
         $res=DB::connect()->prepare($qr);
         if($res->execute()){
@@ -59,11 +74,10 @@ class Salle{
         }
     }
 
-     public function edit($id)
+     public function edit()
     {
-        $qr='Select * from salle where id='.(int)$id;
+        $qr='Select * from salle where id='.(int)$this->id;
         $res=DB::connect()->query($qr);
-        
        if( $row=$res->fetch(PDO::FETCH_ASSOC)){
         return $row;
         
@@ -78,9 +92,9 @@ class Salle{
     }
 
 
-     public function supprimer($id)
+     public function supprimer()
     {
-            $qr="delete from salle where id=".(int)$id;
+            $qr="delete from salle where id=".(int)$this->id;
             $res=DB::connect()->query($qr);
     }
 

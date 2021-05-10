@@ -9,19 +9,16 @@ class MatiereController{
 
     public function ajouterMat()
     {
-       if(isset($_POST['libelle'])){
-        $mt=new Matiere();
-           $mt->ajouterM($_POST['libelle']);
+        if(isset($_POST['cmp'])){
+            $i=(int)$_POST['cmp'];
+            while(isset($_POST['libelle'.$i]) && !empty($_POST['libelle'.$i])){
+                $mt=new Matiere();
+                $mt->setLibelle($_POST['libelle'.$i]);
+                $mt->ajouterM();
+                $i--;
+            }
+        }
             header("location:afficherMat");
-           if($mt=='ok'){
-                echo "<script>alert('ajouter');</script>";
-
-           }
-           else{
-               echo "<script>alert('".$mt."');</script>";
-           }
-
-       }
     }
 
     public function afficherMat()
@@ -33,9 +30,12 @@ class MatiereController{
     }
     public function modifierMat()
     {
-        if(isset($_POST['id'])){
+        if(isset($_POST['save'])){
+            $i=$_POST['num'];
             $mat=new Matiere();
-            $matr=$mat->modifierM($_POST['id'],$_POST['libelle']);
+            $mat->setId($_POST['id'.$i]);
+            $mat->setLibelle($_POST['libelle'.$i]);
+            $matr=$mat->modifierM();
             header("location:afficherMat");
             if($matr=='ok'){
                  echo $matr;
@@ -50,7 +50,9 @@ class MatiereController{
     {
         if(isset($_POST['delete'])){
             $mat=new Matiere();
-            $mat->supprimer($_POST['id']);
+            $i=$_POST['num'];
+            $mat->setId($_POST['id'.$i]);
+            $mat->supprimer();
             header("location:afficherMat");
         }
        
@@ -60,10 +62,10 @@ class MatiereController{
     {
         if(isset($_POST['edit'])){    
             $mat=new Matiere(); 
-            $matr=$mat->edit($_POST['id']);
+            $mat->setId($_POST['id']);
+            $matr=$mat->edit();
             require __DIR__.'/../view/matiere/modifier.php';
         }
     }
-
 }
 ?>

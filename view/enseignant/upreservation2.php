@@ -31,7 +31,7 @@
 			</div>
 		</div><br><br>
 		<div class="jumbotron">
-			<form action="http://localhost/brief5-exel-gestion-salles/enseignant/filterSalle" name="form" onsubmit="f()" method="post" >
+			<form action="filterSalle" name="form" onsubmit="f()" method="post" >
             <div>
             <input type="text" name="groupe" value="<?php echo $groupe; ?>" hidden>
             <input type="text" name="date" value="<?php echo $date; ?>" hidden></div>
@@ -39,11 +39,11 @@
           			<label>Dure:</label>
         			<select class="form-control" name="dure" >
 					  <option value="0" selected>Selectionner la dure du seance:</option>
-					  <option value="08:00-10:00" <?php if(in_array("08:00-10:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="08:00-10:00"){echo "selected"; } else{ echo "disabled";}}else{   echo "disabled";}} ?>>08:00-10:00</option>
-					  <option value="10:00-12:00" <?php if(in_array("10:00-12:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="10:00-12:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>10:00-12:00</option>
-					  <option value="12:00-14:00" <?php if(in_array("12:00-14:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="12:00-14:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>12:00-14:00</option>
-					  <option value="14:00-16:00" <?php if(in_array("14:00-16:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="14:00-16:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>14:00-16:00</option>
-					  <option value="16:00-18:00" <?php if(in_array("16:00-18:00",$dures)){ if(isset($_SESSION['dure_resr'])){ if($_SESSION['dure_resr']=="16:00-18:00"){echo "selected"; }else{ echo "disabled";}}else{   echo "disabled";}} ?>>16:00-18:00</option>
+					  <option value="08:00-10:00" <?php if(in_array("08:00-10:00",$dures)){echo "disabled";} ?>>08:00-10:00</option>
+					  <option value="10:00-12:00" <?php if(in_array("10:00-12:00",$dures)){echo "disabled";} ?>>10:00-12:00</option>
+					  <option value="12:00-14:00" <?php if(in_array("12:00-14:00",$dures)){echo "disabled";} ?>>12:00-14:00</option>
+					  <option value="14:00-16:00" <?php if(in_array("14:00-16:00",$dures)){echo "disabled";} ?>>14:00-16:00</option>
+					  <option value="16:00-18:00" <?php if(in_array("16:00-18:00",$dures)){echo "disabled";} ?>>16:00-18:00</option>
 					</select>
       			</div>
                 <button name="submitD">ok</button>

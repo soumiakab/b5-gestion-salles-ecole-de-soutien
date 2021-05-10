@@ -4,19 +4,21 @@ class GroupeController{
 
     public function index()
     {
-        header("location:http://localhost/brief5-exel-gestion-salles/groupe/afficherGrp");
+        header("location:".URLR."/groupe/afficherGrp");
     }
-
     public function ajouterGrp()
     {
-        $i=0;
-        while(isset($_POST['libelleg'.$i])){
-        $grp=new Groupe();
-           $grp->ajouterG($_POST['libelleg'.$i],$_POST['effectifg'.$i]);
-        //    $this->afficherGrp();
-        $i++;
+        if(isset($_POST['cmp'])){
+        $i=(int)$_POST['cmp'];
+            while(isset($_POST['libelleg'.$i]) && !empty($_POST['libelleg'.$i])){
+                    $grp=new Groupe();
+                    $grp->setLibelle($_POST['libelleg'.$i]);
+                    $grp->setEffectif($_POST['effectifg'.$i]);
+                    $grp->ajouterG();
+                    $i--;
+            }
         }
-        header("location:afficherGrp");
+        header("location:".URLR."/groupe/afficherGrp");
 
     }
 
@@ -29,12 +31,16 @@ class GroupeController{
     }
     public function modifierGrp()
     {
-        if(isset($_POST['id'])){
+        if(isset($_POST['save'])){
+            $i=$_POST['num'];
             $grp=new Groupe();
-            $mgrp=$grp->modifierG($_POST['id'],$_POST['libelle'],$_POST['effectif']);
-            header("location:afficherGrp");
+            $grp->setId($_POST['idg'.$i]);
+            $grp->setLibelle($_POST['libelleg'.$i]);
+            $grp->setEffectif($_POST['effectif'.$i]);
+            $mgrp=$grp->modifierG();
+            header("location:".URLR."/groupe/afficherGrp");
             if($mgrp=='ok'){
-                 echo $mgrp;
+                echo $mgrp;
             }
             else{
                 echo $mgrp;
@@ -45,9 +51,11 @@ class GroupeController{
     public function supprimer()
     {
         if(isset($_POST['delete'])){
+            $i=$_POST['num'];
             $grp=new Groupe();
-            $grp->supprimer($_POST['idg']);
-            header("location:afficherGrp");
+            $grp->setId($_POST['idg'.$i]);
+            $grp->supprimer();
+            header("location:".URLR."/groupe/afficherGrp");
         }
        
     }
@@ -56,7 +64,8 @@ class GroupeController{
     {
         if(isset($_POST['edit'])){    
             $grp=new Groupe();
-            $group=$grp->edit($_POST['id']);
+            $grp->setId($_POST['idg']);
+            $group=$grp->edit();
             require __DIR__.'/../view/groupe/modifier.php';
         }
     }
